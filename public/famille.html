@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gestion Famille - Mur du Souvenir</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    :root {
+      --beige: #F5F5DC;
+      --dark-brown: #8B4513;
+      --light-brown: #A0522D;
+      --cream: #FFF8DC;
+      --white: #FFFFFF;
+      --text-color: #333333;
+      --accent-color: #8B4513;
+      --heading-font: 'Playfair Display', serif;
+      --body-font: 'Poppins', sans-serif;
+      --transition: all 0.3s ease;
+      --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    body {
+      overflow: auto;
+    }
+
+    .page-wrapper {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+    }
+
+    aside {
+      width: 250px;
+      background-color: var(--beige);
+      padding: 20px;
+      height: 100%;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      overflow-y: auto;
+      position: relative;
+      flex-shrink: 0;
+      padding-top: 100px;
+    }
+
+    .menu-toggle {
+      display: none;
+      position: absolute;
+      top: 20px;
+      right: -45px;
+      background-color: var(--accent-color);
+      color: var(--white);
+      border: none;
+      padding: 8px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    aside nav ul {
+      list-style: none;
+    }
+
+    aside nav li {
+      margin-bottom: 20px;
+    }
+
+    aside nav a {
+      text-decoration: none;
+      color: var(--dark-brown);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+
+    aside nav a:hover,
+    aside nav a.active {
+      background-color: var(--dark-brown);
+      color: var(--white);
+      padding: 10px;
+      border-radius: 6px;
+    }
+
+    main {
+      overflow-y: auto;
+      width: 100%;
+      
+    }    
+
+    header h1 {
+      font-family: var(--heading-font);
+      color: var(--dark-brown);
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    section.content {
+      display: none;
+      animation: fadeIn 0.4s ease-in-out;
+      margin-top: 0;
+    }
+
+    section.content.active {
+      display: block;
+    }
+
+    .card {
+      background-color: var(--white);
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      padding: 20px;
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      font-family: var(--heading-font);
+      color: var(--dark-brown);
+      margin-bottom: 15px;
+      font-size: 1.5rem;
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      color: var(--light-brown);
+      margin-top: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+      font-size: 0.95rem;
+    }
+
+    th {
+      background-color: var(--dark-brown);
+      color: var(--white);
+      text-transform: uppercase;
+      font-size: 0.85rem;
+    }
+
+    tr:hover {
+      background-color: #f9f9f9;
+    }
+
+    form {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    label {
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    input, select, textarea {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    button {
+      background-color: var(--accent-color);
+      color: var(--white);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-top: 10px;
+      width: fit-content;
+    }
+
+    button:hover {
+      background-color: var(--light-brown);
+    }
+
+    .edit-btn {
+      background-color: #27AE60;
+      color: var(--white);
+      margin-right: 10px;
+    }
+
+    .delete-btn {
+      background-color: #C0392B;
+      color: var(--white);
+    }
+
+    #calendar {
+      margin-top: 15px;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      aside {
+        width: 220px;
+        left: -220px;
+        position: absolute;
+        z-index: 10;
+      }
+
+      aside.active {
+        left: 0;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      main {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="navbar-container" style=" height: 70px;
+  flex-shrink: 0;
+  z-index: 1100;position: fixed;top: 0;
+  left: 0;
+  right: 0;"></div>
+
+
+  <div class="page-wrapper">
+  <!-- Sidebar -->
+  <aside id="sidebar">
+    <button class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+    <nav>
+      <ul>
+        <li><a href="#espace" class="menu-link"><i class="fas fa-user-circle"></i> Espace</a></li>
+        <li><a href="#defunts" class="menu-link"><i class="fas fa-monument"></i> Défunts</a></li>
+        <li><a href="#commemorations" class="menu-link"><i class="fas fa-calendar-alt"></i> Commémorations</a></li>
+        <li><a href="#communication" class="menu-link"><i class="fas fa-comments"></i> Communication</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main>
+    <header>
+      <h1>Gestionnaire Famille - Mur du Souvenir</h1>
+    </header>
+
+    <!-- Sections dynamiques -->
+    <div id="sections">
+      <!-- Les sections vont suivre ici -->
+             <!-- Section Utilisateurs -->
+      <section id="espace" class="content active">
+        <div class="card">
+          <h2>Accès à votre espace</h2>
+          <p>Liste des utilisateurs :</p>
+          <table id="user-table">
+            <thead>
+              <tr><th>Nom</th><th>Prénom</th><th>Rôle</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="user-list"></tbody>
+          </table>
+          <h3>Ajouter un utilisateur</h3>
+          <form id="add-user-form">
+            <label for="user-name">Nom</label>
+            <input type="text" id="user-name" required />
+            <label for="user-first-name">Prénom</label>
+            <input type="text" id="user-first-name" required />
+            <label for="user-role">Rôle</label>
+            <select id="user-role" required>
+              <option value="">-- Choisir un rôle --</option>
+              <option value="Admin">Admin</option>
+              <option value="Membre de la famille">Membre de la famille</option>
+              <option value="Modérateur">Modérateur</option>
+            </select>
+            <button type="submit">Ajouter</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Section Défunts -->
+      <section id="defunts" class="content">
+        <div class="card">
+          <h2>Gestion des défunts</h2>
+          <table id="defunt-table">
+            <thead>
+              <tr><th>Nom</th><th>Prénom</th><th>Date décès</th><th>Yahrzeit</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="defunt-list"></tbody>
+          </table>
+          <h3>Ajouter un défunt</h3>
+          <form id="add-defunt-form">
+            <label for="defunt-name">Nom</label>
+            <input type="text" id="defunt-name" required />
+            <label for="defunt-first-name">Prénom</label>
+            <input type="text" id="defunt-first-name" required />
+            <label for="defunt-date">Date de décès</label>
+            <input type="date" id="defunt-date" required />
+            <label for="defunt-yahrzeit">Yahrzeit</label>
+            <input type="date" id="defunt-yahrzeit" required />
+            <button type="submit">Ajouter</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Section Commémorations -->
+      <section id="commemorations" class="content">
+        <div class="card">
+          <h2>Organisation des commémorations</h2>
+
+          <!-- Nouveau tableau -->
+          <table id="commemoration-table">
+            <thead>
+              <tr>
+                <th>Défunt</th>
+                <th>Date</th>
+                <th>Lieu</th>
+                <th>Détails</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="commemoration-list"></tbody>
+          </table>
+
+          <form id="commemorationForm">
+            <h3>Ajouter une commémoration</h3>
+            <label for="deceased">Défunt</label>
+            <select id="deceased" required>
+              <option value="">-- Sélectionner --</option>
+              <option value="Jean Dupont">Jean Dupont</option>
+              <option value="Marie Durand">Marie Durand</option>
+            </select>
+            <label for="date">Date</label>
+            <input type="date" id="date" required />
+            <label for="lieu">Lieu</label>
+            <input type="text" id="lieu" required />
+            <label for="details">Détails</label>
+            <textarea id="details" required></textarea>
+            <button type="submit">Ajouter</button>
+          </form>
+        </div>
+      </section>
+
+
+      <!-- Section Communication -->
+      <section id="communication" class="content">
+        <div class="card">
+          <h2>Communication avec les familles</h2>
+          <table id="contact-table">
+            <thead>
+              <tr>
+                <th>Défunt</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Relation</th>
+                <th>Type</th>
+                <th>Détail</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="contact-list"></tbody>
+          </table>
+          <h3>Ajouter un contact</h3>
+          <form id="add-contact-form">
+            <label for="defunt-name-contact">Défunt</label>
+            <select id="defunt-name-contact" required>
+              <option value="">-- Choisir un défunt --</option>
+              <option value="Jean Dupont">Jean Dupont</option>
+              <option value="Marie Durand">Marie Durand</option>
+            </select>
+            <label for="contact-nom">Nom du contact</label>
+            <input type="text" id="contact-nom" required />
+
+            <label for="contact-prenom">Prénom du contact</label>
+            <input type="text" id="contact-prenom" required />
+            <label for="contact-lien">Lien avec le défunt</label>
+            <input type="text" id="contact-lien" required />
+            <label for="contact-type">Type</label>
+            <select id="contact-type" required>
+              <option value="">-- Type de contact --</option>
+              <option value="Email">Email</option>
+              <option value="Téléphone">Téléphone</option>
+            </select>
+            <label for="contact-detail">Détail</label>
+            <input type="text" id="contact-detail" required />
+            <button type="submit">Ajouter le contact</button>
+          </form>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js"></script>
+  <script>
+    // Menu toggle mobile
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('active');
+    }
+
+    // Navigation
+    document.querySelectorAll('.menu-link').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelectorAll('.menu-link').forEach(l => l.classList.remove('active'));
+        document.querySelectorAll('.content').forEach(s => s.classList.remove('active'));
+        this.classList.add('active');
+        const target = this.getAttribute('href');
+        document.querySelector(target).classList.add('active');
+        if (window.innerWidth < 768) toggleSidebar();
+      });
+    });
+
+    //Utilisateurs
+    const familyMembers = [
+    { name: 'Doe', firstName: 'John', role: 'Admin' },
+    { name: 'Smith', firstName: 'Jane', role: 'Membre de la famille' }
+    ];
+
+    function renderFamily() {
+        const list = document.getElementById('user-list');
+        list.innerHTML = '';
+        familyMembers.forEach((m, i) => {
+          list.innerHTML += `<tr>
+            <td>${m.name}</td><td>${m.firstName}</td><td>${m.role}</td>
+            <td>
+              <button class="edit-btn" onclick="editMember(${i})">Modifier</button>
+              <button class="delete-btn" onclick="deleteMember(${i})">Supprimer</button>
+            </td>
+          </tr>`;
+        });
+      }
+
+      document.getElementById('add-user-form').addEventListener('submit', e => {
+        e.preventDefault();
+        const name = document.getElementById('user-name').value;
+        const firstName = document.getElementById('user-first-name').value;
+        const role = document.getElementById('user-role').value;
+        familyMembers.push({ name, firstName, role });
+        e.target.reset();
+        renderFamily();
+      });
+      
+      function editMember(i) {
+        const member = familyMembers[i];
+        const name = prompt('Nom', member.name);
+        const firstName = prompt('Prénom', member.firstName);
+        const role = prompt('Rôle', member.role);
+        if (name && firstName && role) {
+          familyMembers[i] = { name, firstName, role };
+          renderFamily();
+        }
+      }
+      
+      function deleteMember(i) {
+        if (confirm('Supprimer ce membre ?')) {
+          familyMembers.splice(i, 1);
+          renderFamily();
+        }
+      }
+      
+      // Initial rendering
+      renderFamily();
+
+    // Défunts
+    const deceasedList = [];
+
+    function renderDefunts() {
+      const list = document.getElementById('defunt-list');
+      list.innerHTML = '';
+      deceasedList.forEach((d, i) => {
+        list.innerHTML += `<tr>
+          <td>${d.name}</td><td>${d.firstName}</td><td>${d.deathDate}</td><td>${d.yahrzeit}</td>
+          <td><button class="edit-btn" onclick="editDeceased(${i})">Modifier</button></td>
+        </tr>`;
+      });
+    }
+
+    document.getElementById('add-defunt-form').addEventListener('submit', e => {
+      e.preventDefault();
+      const name = document.getElementById('defunt-name').value;
+      const firstName = document.getElementById('defunt-first-name').value;
+      const deathDate = document.getElementById('defunt-date').value;
+      const yahrzeit = document.getElementById('defunt-yahrzeit').value;
+      deceasedList.push({ name, firstName, deathDate, yahrzeit });
+      e.target.reset();
+      renderDefunts();
+    });
+
+    function editDeceased(i) {
+      const d = deceasedList[i];
+      const name = prompt('Nom', d.name);
+      const firstName = prompt('Prénom', d.firstName);
+      const deathDate = prompt('Date de décès', d.deathDate);
+      const yahrzeit = prompt('Yahrzeit', d.yahrzeit);
+      if (name && firstName && deathDate && yahrzeit) {
+        deceasedList[i] = { name, firstName, deathDate, yahrzeit };
+        renderDefunts();
+      }
+    }
+
+    renderDefunts();
+
+    //Ajouter une commémoration
+    const commemorations = [];
+
+    function renderCommemorations() {
+      const list = document.getElementById('commemoration-list');
+      list.innerHTML = '';
+      commemorations.forEach((c, i) => {
+        list.innerHTML += `
+          <tr>
+            <td>${c.defunt}</td>
+            <td>${c.date}</td>
+            <td>${c.lieu}</td>
+            <td>${c.details}</td>
+            <td>
+              <button class="edit-btn" onclick="editCommemoration(${i})">Modifier</button>
+              <button class="delete-btn" onclick="deleteCommemoration(${i})">Supprimer</button>
+            </td>
+          </tr>`;
+      });
+    }
+
+    document.getElementById('commemorationForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const defunt = document.getElementById('deceased').value;
+      const date = document.getElementById('date').value;
+      const lieu = document.getElementById('lieu').value;
+      const details = document.getElementById('details').value;
+
+      commemorations.push({ defunt, date, lieu, details });
+      e.target.reset();
+      renderCommemorations();
+    });
+
+    function editCommemoration(i) {
+      const c = commemorations[i];
+      const defunt = prompt('Défunt', c.defunt);
+      const date = prompt('Date', c.date);
+      const lieu = prompt('Lieu', c.lieu);
+      const details = prompt('Détails', c.details);
+
+      if (defunt && date && lieu && details) {
+        commemorations[i] = { defunt, date, lieu, details };
+        renderCommemorations();
+      }
+    }
+
+    function deleteCommemoration(i) {
+      if (confirm('Supprimer cette commémoration ?')) {
+        commemorations.splice(i, 1);
+        renderCommemorations();
+      }
+    }
+
+    renderCommemorations();
+
+
+    const contacts = [];
+
+    //Ajouter un contact
+    function renderContacts() {
+      const list = document.getElementById('contact-list');
+      list.innerHTML = '';
+      contacts.forEach((c, i) => {
+        list.innerHTML += `<tr>
+          <td>${c.defunt}</td>
+          <td>${c.nom}</td>
+          <td>${c.prenom}</td>
+          <td>${c.lien}</td>
+          <td>${c.type}</td>
+          <td>${c.detail}</td>
+          <td>
+            <button class="delete-btn" onclick="deleteContact(${i})">Supprimer</button>
+          </td>
+        </tr>`;
+      });
+    }
+
+    document.getElementById('add-contact-form').addEventListener('submit', e => {
+      e.preventDefault();
+      const defunt = document.getElementById('defunt-name-contact').value;
+      const type = document.getElementById('contact-type').value;
+      const detail = document.getElementById('contact-detail').value;
+      const nom = document.getElementById('contact-nom').value;
+      const prenom = document.getElementById('contact-prenom').value;
+      const lien = document.getElementById('contact-lien').value;
+
+      contacts.push({ defunt, type, detail, nom, prenom, lien });
+      e.target.reset();
+      renderContacts();
+    });
+
+    function deleteContact(i) {
+      if (confirm('Supprimer ce contact ?')) {
+        contacts.splice(i, 1);
+        renderContacts();
+      }
+    }
+    renderContacts();
+
+
+  </script>
+
+  <div id="footer-container" style="height: 60px;
+  flex-shrink: 0;"></div>
+
+  <script src="./js/components.js"></script>
+</body>
+</html>
