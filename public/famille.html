@@ -44,71 +44,24 @@
       flex-direction: column;
     }
 
-    .header {
-      background-color: var(--white);
-      height: 60px;
+    .nav-menu {
+      background-color: var(--beige);
+      padding: 10px;
+      box-shadow: var(--shadow);
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
-      z-index: 1000;
-      box-shadow: var(--shadow);
-      display: flex;
-      align-items: center;
-      padding: 0 20px;
-      justify-content: space-between;
-      margin-top:60px;
-    }
-
-    .header h1 {
-      font-family: var(--heading-font);
-      color: var(--dark-brown);
-      font-size: 1.5rem;
-    }
-
-    .nav-toggle {
-      background-color: var(--accent-color);
-      border: none;
-      color: var(--white);
-      font-size: 1.5rem;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: var(--transition);
-    }
-
-    .nav-toggle:hover {
-      background-color: var(--light-brown);
-    }
-
-    .nav-menu {
-      position: fixed;
-      top: 70px;
-      right: 20px;
       z-index: 900;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
-
-    .nav-menu.active {
-      opacity: 1;
-      visibility: visible;
     }
 
     .nav-menu ul {
       list-style: none;
       display: flex;
-      flex-direction: column;
-      gap: 10px;
-      background-color: var(--beige);
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: var(--shadow);
+      flex-direction: row;
+      gap: 15px;
+      justify-content: center;
+      padding: 10px;
     }
 
     .nav-menu li {
@@ -254,17 +207,8 @@
 
     /* Responsive */
     @media (max-width: 768px) {
-      .header h1 {
-        font-size: 1.2rem;
-      }
-
-      .nav-toggle {
-        width: 35px;
-        height: 35px;
-        font-size: 1.2rem;
-      }
-
       .nav-menu ul {
+        flex-direction: column;
         padding: 15px;
       }
 
@@ -301,41 +245,15 @@
         font-size: 0.85rem;
       }
     }
-
-    @media (min-width: 769px) {
-      .nav-menu {
-        top: 60px;
-        right: 20px;
-        background-color: var(--beige);
-        border-radius: 10px;
-        padding: 10px;
-      }
-
-      .nav-menu ul {
-        flex-direction: row;
-        gap: 15px;
-        padding: 10px;
-      }
-
-      .nav-menu.active {
-        opacity: 1;
-        visibility: visible;
-      }
-    }
   </style>
 </head>
 <body>
   <div id="navbar-container"></div>
 
-  <header class="header">
-    <h1>Gestion Famille - Mur du Souvenir</h1>
-    <button class="nav-toggle" onclick="toggleNav()"><i class="fas fa-bars"></i></button>
-  </header>
-
   <nav class="nav-menu" id="nav-menu">
     <ul>
       <li><a href="#espace" class="nav-link active"><i class="fas fa-user-circle"></i> Espace</a></li>
-      <li><a href="#defunts" class="nav-link"><i class="fas fa-monument"></i> Défunts</a></li>
+      <li><a href="#defunts" class="nav-link active"><i class="fas fa-monument"></i> Défunts</a></li>
       <li><a href="#commemorations" class="nav-link"><i class="fas fa-calendar-alt"></i> Commémorations</a></li>
       <li><a href="#communication" class="nav-link"><i class="fas fa-comments"></i> Communication</a></li>
     </ul>
@@ -370,7 +288,7 @@
       </div>
     </section>
 
-    <section id="defunts" class="content">
+    <section id="defunts" class="content active">
       <div class="card">
         <h2>Gestion des défunts</h2>
         <table id="defunt-table">
@@ -462,14 +380,10 @@
   <div id="footer-container"></div>
 
   <script src="./js/components.js"></script>
-
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js"></script>
   <script>
-    function toggleNav() {
-      document.getElementById('nav-menu').classList.toggle('active');
-    }
-
-    document.querySelectorAll('.nav-link').forEach(link => {
+      
+  document.querySelectorAll('.nav-link').forEach(link => {
       link.addEventListener('click', function(e) {
         e.preventDefault();
         document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
