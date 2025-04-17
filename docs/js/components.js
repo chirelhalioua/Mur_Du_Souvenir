@@ -14,8 +14,8 @@ function createNavbar() {
         </button>
         <ul class="nav-links" role="menu">
           <li><a href="/" role="menuitem">Accueil</a></li>
-          <li><a href="./contact" role="menuitem">Contact</a></li>
-          <li><a href="./login" class="button" role="menuitem">Connexion/Inscription</a></li>
+          <li><a href="contact.html" role="menuitem">Contact</a></li>
+          <li><a href="login.html" class="button" role="menuitem">Connexion/Inscription</a></li>
         </ul>
       </nav>
     `;
