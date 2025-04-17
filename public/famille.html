@@ -34,95 +34,33 @@
 
     html, body {
       height: 100%;
-      margin: 0;
-      padding: 0;
+      font-family: var(--body-font);
+      background-color: var(--cream);
+      color: var(--text-color);
+    }
+
+    body {
       display: flex;
       flex-direction: column;
     }
 
-    body {
-      overflow: auto;
-    }
-
-    .page-wrapper {
+    .content-container {
       flex: 1;
-      display: flex;
-      overflow: hidden;
-    }
-
-    aside {
-      width: 250px;
-      background-color: var(--beige);
+      margin-top: 110px;
+      margin-bottom: 50px;
       padding: 20px;
-      height: 100%;
-      box-shadow: var(--shadow);
-      transition: var(--transition);
-      overflow-y: auto;
-      position: relative;
-      flex-shrink: 0;
-      padding-top: 100px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      min-height: calc(100vh - 160px);
     }
 
-    .menu-toggle {
-      display: none;
-      position: absolute;
-      top: 20px;
-      right: -45px;
-      background-color: var(--accent-color);
-      color: var(--white);
-      border: none;
-      padding: 8px 10px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    aside nav ul {
-      list-style: none;
-    }
-
-    aside nav li {
-      margin-bottom: 20px;
-    }
-
-    aside nav a {
-      text-decoration: none;
-      color: var(--dark-brown);
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 1rem;
-      transition: var(--transition);
-    }
-
-    aside nav a:hover,
-    aside nav a.active {
-      background-color: var(--dark-brown);
-      color: var(--white);
-      padding: 10px;
-      border-radius: 6px;
-    }
-
-    main {
-      overflow-y: auto;
-      width: 100%;
-      
-    }    
-
-    header h1 {
-      font-family: var(--heading-font);
-      color: var(--dark-brown);
-      font-size: 2rem;
-      margin-bottom: 20px;
-    }
-
-    section.content {
+    .content {
       display: none;
       animation: fadeIn 0.4s ease-in-out;
-      margin-top: 0;
     }
 
-    section.content.active {
+    .content.active {
       display: block;
     }
 
@@ -131,40 +69,40 @@
       border-radius: 10px;
       box-shadow: var(--shadow);
       padding: 20px;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
     }
 
-    h2 {
+    .card h2 {
       font-family: var(--heading-font);
       color: var(--dark-brown);
-      margin-bottom: 15px;
       font-size: 1.5rem;
+      margin-bottom: 15px;
     }
 
-    h3 {
+    .card h3 {
       font-size: 1.2rem;
       color: var(--light-brown);
-      margin-top: 20px;
+      margin: 15px 0 10px;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 10px;
+      margin: 10px 0;
     }
 
     th, td {
       text-align: left;
-      padding: 12px;
+      padding: 10px;
       border-bottom: 1px solid #eee;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
     }
 
     th {
       background-color: var(--dark-brown);
       color: var(--white);
       text-transform: uppercase;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
     }
 
     tr:hover {
@@ -172,7 +110,6 @@
     }
 
     form {
-      margin-top: 20px;
       display: flex;
       flex-direction: column;
       gap: 10px;
@@ -180,30 +117,31 @@
 
     label {
       font-weight: 500;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
     }
 
     input, select, textarea {
-      padding: 10px;
+      padding: 8px;
       border: 1px solid #ccc;
       border-radius: 6px;
-      font-size: 1rem;
+      font-size: 0.9rem;
+      width: 100%;
     }
 
     textarea {
       resize: vertical;
+      min-height: 80px;
     }
 
     button {
       background-color: var(--accent-color);
       color: var(--white);
       border: none;
-      padding: 10px 20px;
+      padding: 8px 16px;
       border-radius: 6px;
       font-weight: 600;
       cursor: pointer;
       transition: var(--transition);
-      margin-top: 10px;
       width: fit-content;
     }
 
@@ -213,293 +151,243 @@
 
     .edit-btn {
       background-color: #27AE60;
-      color: var(--white);
-      margin-right: 10px;
+      margin-right: 8px;
     }
 
     .delete-btn {
       background-color: #C0392B;
-      color: var(--white);
     }
 
-    #calendar {
-      margin-top: 15px;
-    }
 
     @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(10px);}
-      to {opacity: 1; transform: translateY(0);}
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    /* RESPONSIVE */
-    @media (max-width: 768px) {
-      aside {
-        width: 220px;
-        left: -220px;
-        position: absolute;
-        z-index: 10;
+      .content-container {
+        padding: 15px;
+        margin-top: 60px;
       }
 
-      aside.active {
-        left: 0;
+      .card {
+        padding: 15px;
       }
 
-      .menu-toggle {
+      th, td {
+        padding: 8px;
+        font-size: 0.85rem;
+      }
+
+      table {
         display: block;
+        overflow-x: auto;
+        white-space: nowrap;
       }
 
-      main {
-        margin-left: 0;
+      input, select, textarea {
+        font-size: 0.85rem;
       }
-    }
+
+      button {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+      }
   </style>
 </head>
+
 <body>
+  <div id="navbar-container"></div>
 
-  <div id="navbar-container" style=" height: 70px;
-  flex-shrink: 0;
-  z-index: 1100;position: fixed;top: 0;
-  left: 0;
-  right: 0;"></div>
+  <main class="content-container">
+    <section id="espace" class="content active">
+      <div class="card">
+        <h2>Accès à votre espace</h2>
+        <p>Liste des utilisateurs :</p>
+        <table id="user-table">
+          <thead>
+            <tr><th>Nom</th><th>Prénom</th><th>Rôle</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="user-list"></tbody>
+        </table>
+        <h3>Ajouter un utilisateur</h3>
+        <form id="add-user-form">
+          <label for="user-name">Nom</label>
+          <input type="text" id="user-name" required />
+          <label for="user-first-name">Prénom</label>
+          <input type="text" id="user-first-name" required />
+          <label for="user-role">Rôle</label>
+          <select id="user-role" required>
+            <option value="">-- Choisir un rôle --</option>
+            <option value="Admin">Admin</option>
+            <option value="Membre de la famille">Membre de la famille</option>
+            <option value="Modérateur">Modérateur</option>
+          </select>
+          <button type="submit">Ajouter</button>
+        </form>
+      </div>
+    </section>
 
+    <section id="defunts" class="content">
+      <div class="card">
+        <h2>Gestion des défunts</h2>
+        <table id="defunt-table">
+          <thead>
+            <tr><th>Nom</th><th>Prénom</th><th>Date décès</th><th>Yahrzeit</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="defunt-list"></tbody>
+        </table>
+        <h3>Ajouter un défunt</h3>
+        <form id="add-defunt-form">
+          <label for="defunt-name">Nom</label>
+          <input type="text" id="defunt-name" required />
+          <label for="defunt-first-name">Prénom</label>
+          <input type="text" id="defunt-first-name" required />
+          <label for="defunt-date">Date de décès</label>
+          <input type="date" id="defunt-date" required />
+          <label for="defunt-yahrzeit">Yahrzeit</label>
+          <input type="date" id="defunt-yahrzeit" required />
+          <button type="submit">Ajouter</button>
+        </form>
+      </div>
+    </section>
 
-  <div class="page-wrapper">
-  <!-- Sidebar -->
-  <aside id="sidebar">
-    <button class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
-    <nav>
-      <ul>
-        <li><a href="#espace" class="menu-link"><i class="fas fa-user-circle"></i> Espace</a></li>
-        <li><a href="#defunts" class="menu-link"><i class="fas fa-monument"></i> Défunts</a></li>
-        <li><a href="#commemorations" class="menu-link"><i class="fas fa-calendar-alt"></i> Commémorations</a></li>
-        <li><a href="#communication" class="menu-link"><i class="fas fa-comments"></i> Communication</a></li>
-      </ul>
-    </nav>
-  </aside>
+    <section id="commemorations" class="content">
+      <div class="card">
+        <h2>Organisation des commémorations</h2>
+        <table id="commemoration-table">
+          <thead>
+            <tr><th>Défunt</th><th>Date</th><th>Lieu</th><th>Détails</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="commemoration-list"></tbody>
+        </table>
+        <h3>Ajouter une commémoration</h3>
+        <form id="commemorationForm">
+          <label for="deceased">Défunt</label>
+          <select id="deceased" required>
+            <option value="">-- Sélectionner --</option>
+            <option value="Jean Dupont">Jean Dupont</option>
+            <option value="Marie Durand">Marie Durand</option>
+          </select>
+          <label for="date">Date</label>
+          <input type="date" id="date" required />
+          <label for="lieu">Lieu</label>
+          <input type="text" id="lieu" required />
+          <label for="details">Détails</label>
+          <textarea id="details" required></textarea>
+          <button type="submit">Ajouter</button>
+        </form>
+      </div>
+    </section>
 
-  <main>
-    <header>
-      <h1>Gestionnaire Famille - Mur du Souvenir</h1>
-    </header>
-
-    <!-- Sections dynamiques -->
-    <div id="sections">
-      <!-- Les sections vont suivre ici -->
-             <!-- Section Utilisateurs -->
-      <section id="espace" class="content active">
-        <div class="card">
-          <h2>Accès à votre espace</h2>
-          <p>Liste des utilisateurs :</p>
-          <table id="user-table">
-            <thead>
-              <tr><th>Nom</th><th>Prénom</th><th>Rôle</th><th>Actions</th></tr>
-            </thead>
-            <tbody id="user-list"></tbody>
-          </table>
-          <h3>Ajouter un utilisateur</h3>
-          <form id="add-user-form">
-            <label for="user-name">Nom</label>
-            <input type="text" id="user-name" required />
-            <label for="user-first-name">Prénom</label>
-            <input type="text" id="user-first-name" required />
-            <label for="user-role">Rôle</label>
-            <select id="user-role" required>
-              <option value="">-- Choisir un rôle --</option>
-              <option value="Admin">Admin</option>
-              <option value="Membre de la famille">Membre de la famille</option>
-              <option value="Modérateur">Modérateur</option>
-            </select>
-            <button type="submit">Ajouter</button>
-          </form>
-        </div>
-      </section>
-
-      <!-- Section Défunts -->
-      <section id="defunts" class="content">
-        <div class="card">
-          <h2>Gestion des défunts</h2>
-          <table id="defunt-table">
-            <thead>
-              <tr><th>Nom</th><th>Prénom</th><th>Date décès</th><th>Yahrzeit</th><th>Actions</th></tr>
-            </thead>
-            <tbody id="defunt-list"></tbody>
-          </table>
-          <h3>Ajouter un défunt</h3>
-          <form id="add-defunt-form">
-            <label for="defunt-name">Nom</label>
-            <input type="text" id="defunt-name" required />
-            <label for="defunt-first-name">Prénom</label>
-            <input type="text" id="defunt-first-name" required />
-            <label for="defunt-date">Date de décès</label>
-            <input type="date" id="defunt-date" required />
-            <label for="defunt-yahrzeit">Yahrzeit</label>
-            <input type="date" id="defunt-yahrzeit" required />
-            <button type="submit">Ajouter</button>
-          </form>
-        </div>
-      </section>
-
-      <!-- Section Commémorations -->
-      <section id="commemorations" class="content">
-        <div class="card">
-          <h2>Organisation des commémorations</h2>
-
-          <!-- Nouveau tableau -->
-          <table id="commemoration-table">
-            <thead>
-              <tr>
-                <th>Défunt</th>
-                <th>Date</th>
-                <th>Lieu</th>
-                <th>Détails</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="commemoration-list"></tbody>
-          </table>
-
-          <form id="commemorationForm">
-            <h3>Ajouter une commémoration</h3>
-            <label for="deceased">Défunt</label>
-            <select id="deceased" required>
-              <option value="">-- Sélectionner --</option>
-              <option value="Jean Dupont">Jean Dupont</option>
-              <option value="Marie Durand">Marie Durand</option>
-            </select>
-            <label for="date">Date</label>
-            <input type="date" id="date" required />
-            <label for="lieu">Lieu</label>
-            <input type="text" id="lieu" required />
-            <label for="details">Détails</label>
-            <textarea id="details" required></textarea>
-            <button type="submit">Ajouter</button>
-          </form>
-        </div>
-      </section>
-
-
-      <!-- Section Communication -->
-      <section id="communication" class="content">
-        <div class="card">
-          <h2>Communication avec les familles</h2>
-          <table id="contact-table">
-            <thead>
-              <tr>
-                <th>Défunt</th>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Relation</th>
-                <th>Type</th>
-                <th>Détail</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="contact-list"></tbody>
-          </table>
-          <h3>Ajouter un contact</h3>
-          <form id="add-contact-form">
-            <label for="defunt-name-contact">Défunt</label>
-            <select id="defunt-name-contact" required>
-              <option value="">-- Choisir un défunt --</option>
-              <option value="Jean Dupont">Jean Dupont</option>
-              <option value="Marie Durand">Marie Durand</option>
-            </select>
-            <label for="contact-nom">Nom du contact</label>
-            <input type="text" id="contact-nom" required />
-
-            <label for="contact-prenom">Prénom du contact</label>
-            <input type="text" id="contact-prenom" required />
-            <label for="contact-lien">Lien avec le défunt</label>
-            <input type="text" id="contact-lien" required />
-            <label for="contact-type">Type</label>
-            <select id="contact-type" required>
-              <option value="">-- Type de contact --</option>
-              <option value="Email">Email</option>
-              <option value="Téléphone">Téléphone</option>
-            </select>
-            <label for="contact-detail">Détail</label>
-            <input type="text" id="contact-detail" required />
-            <button type="submit">Ajouter le contact</button>
-          </form>
-        </div>
-      </section>
-    </div>
+    <section id="communication" class="content">
+      <div class="card">
+        <h2>Communication avec les familles</h2>
+        <table id="contact-table">
+          <thead>
+            <tr><th>Défunt</th><th>Nom</th><th>Prénom</th><th>Relation</th><th>Type</th><th>Détail</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="contact-list"></tbody>
+        </table>
+        <h3>Ajouter un contact</h3>
+        <form id="add-contact-form">
+          <label for="defunt-name-contact">Défunt</label>
+          <select id="defunt-name-contact" required>
+            <option value="">-- Choisir un défunt --</option>
+            <option value="Jean Dupont">Jean Dupont</option>
+            <option value="Marie Durand">Marie Durand</option>
+          </select>
+          <label for="contact-nom">Nom du contact</label>
+          <input type="text" id="contact-nom" required />
+          <label for="contact-prenom">Prénom du contact</label>
+          <input type="text" id="contact-prenom" required />
+          <label for="contact-lien">Lien avec le défunt</label>
+          <input type="text" id="contact-lien" required />
+          <label for="contact-type">Type</label>
+          <select id="contact-type" required>
+            <option value="">-- Type de contact --</option>
+            <option value="Email">Email</option>
+            <option value="Téléphone">Téléphone</option>
+          </select>
+          <label for="contact-detail">Détail</label>
+          <input type="text" id="contact-detail" required />
+          <button type="submit">Ajouter le contact</button>
+        </form>
+      </div>
+    </section>
   </main>
-</div>
 
+
+  <div id="footer-container"></div>
+
+  <script src=".docs/js/components.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js"></script>
   <script>
-    // Menu toggle mobile
-    function toggleSidebar() {
-      document.getElementById('sidebar').classList.toggle('active');
+    function toggleNav() {
+      document.getElementById('nav-bar').classList.toggle('active');
     }
 
-    // Navigation
-    document.querySelectorAll('.menu-link').forEach(link => {
+    document.querySelectorAll('.nav-link').forEach(link => {
       link.addEventListener('click', function(e) {
         e.preventDefault();
-        document.querySelectorAll('.menu-link').forEach(l => l.classList.remove('active'));
-        document.querySelectorAll('.content').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
         this.classList.add('active');
         const target = this.getAttribute('href');
         document.querySelector(target).classList.add('active');
-        if (window.innerWidth < 768) toggleSidebar();
+        if (window.innerWidth <= 768) toggleNav();
       });
     });
 
-    //Utilisateurs
     const familyMembers = [
-    { name: 'Doe', firstName: 'John', role: 'Admin' },
-    { name: 'Smith', firstName: 'Jane', role: 'Membre de la famille' }
+      { name: 'Doe', firstName: 'John', role: 'Admin' },
+      { name: 'Smith', firstName: 'Jane', role: 'Membre de la famille' }
     ];
 
     function renderFamily() {
-        const list = document.getElementById('user-list');
-        list.innerHTML = '';
-        familyMembers.forEach((m, i) => {
-          list.innerHTML += `<tr>
-            <td>${m.name}</td><td>${m.firstName}</td><td>${m.role}</td>
-            <td>
-              <button class="edit-btn" onclick="editMember(${i})">Modifier</button>
-              <button class="delete-btn" onclick="deleteMember(${i})">Supprimer</button>
-            </td>
-          </tr>`;
-        });
-      }
-
-      document.getElementById('add-user-form').addEventListener('submit', e => {
-        e.preventDefault();
-        const name = document.getElementById('user-name').value;
-        const firstName = document.getElementById('user-first-name').value;
-        const role = document.getElementById('user-role').value;
-        familyMembers.push({ name, firstName, role });
-        e.target.reset();
-        renderFamily();
+      const list = document.getElementById('user-list');
+      list.innerHTML = '';
+      familyMembers.forEach((m, i) => {
+        list.innerHTML += `<tr>
+          <td>${m.name}</td><td>${m.firstName}</td><td>${m.role}</td>
+          <td>
+            <button class="edit-btn" onclick="editMember(${i})">Modifier</button>
+            <button class="delete-btn" onclick="deleteMember(${i})">Supprimer</button>
+          </td>
+        </tr>`;
       });
-      
-      function editMember(i) {
-        const member = familyMembers[i];
-        const name = prompt('Nom', member.name);
-        const firstName = prompt('Prénom', member.firstName);
-        const role = prompt('Rôle', member.role);
-        if (name && firstName && role) {
-          familyMembers[i] = { name, firstName, role };
-          renderFamily();
-        }
-      }
-      
-      function deleteMember(i) {
-        if (confirm('Supprimer ce membre ?')) {
-          familyMembers.splice(i, 1);
-          renderFamily();
-        }
-      }
-      
-      // Initial rendering
-      renderFamily();
+    }
 
-    // Défunts
+    document.getElementById('add-user-form').addEventListener('submit', e => {
+      e.preventDefault();
+      const name = document.getElementById('user-name').value;
+      const firstName = document.getElementById('user-first-name').value;
+      const role = document.getElementById('user-role').value;
+      familyMembers.push({ name, firstName, role });
+      e.target.reset();
+      renderFamily();
+    });
+
+    function editMember(i) {
+      const member = familyMembers[i];
+      const name = prompt('Nom', member.name);
+      const firstName = prompt('Prénom', member.firstName);
+      const role = prompt('Rôle', member.role);
+      if (name && firstName && role) {
+        familyMembers[i] = { name, firstName, role };
+        renderFamily();
+      }
+    }
+
+    function deleteMember(i) {
+      if (confirm('Supprimer ce membre ?')) {
+        familyMembers.splice(i, 1);
+        renderFamily();
+      }
+    }
+
+    renderFamily();
+
     const deceasedList = [];
 
     function renderDefunts() {
@@ -538,7 +426,6 @@
 
     renderDefunts();
 
-    //Ajouter une commémoration
     const commemorations = [];
 
     function renderCommemorations() {
@@ -565,7 +452,6 @@
       const date = document.getElementById('date').value;
       const lieu = document.getElementById('lieu').value;
       const details = document.getElementById('details').value;
-
       commemorations.push({ defunt, date, lieu, details });
       e.target.reset();
       renderCommemorations();
@@ -577,7 +463,6 @@
       const date = prompt('Date', c.date);
       const lieu = prompt('Lieu', c.lieu);
       const details = prompt('Détails', c.details);
-
       if (defunt && date && lieu && details) {
         commemorations[i] = { defunt, date, lieu, details };
         renderCommemorations();
@@ -593,10 +478,8 @@
 
     renderCommemorations();
 
-
     const contacts = [];
 
-    //Ajouter un contact
     function renderContacts() {
       const list = document.getElementById('contact-list');
       list.innerHTML = '';
@@ -623,7 +506,6 @@
       const nom = document.getElementById('contact-nom').value;
       const prenom = document.getElementById('contact-prenom').value;
       const lien = document.getElementById('contact-lien').value;
-
       contacts.push({ defunt, type, detail, nom, prenom, lien });
       e.target.reset();
       renderContacts();
@@ -635,14 +517,8 @@
         renderContacts();
       }
     }
+
     renderContacts();
-
-
   </script>
-
-  <div id="footer-container" style="height: 60px;
-  flex-shrink: 0;"></div>
-
-  <script src="./js/components.js"></script>
 </body>
 </html>
