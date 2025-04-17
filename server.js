@@ -4,11 +4,15 @@ const app = express();
 const port = 3000;
 
 // Servir les fichiers statiques depuis le dossier src
-app.use(express.static(path.join(__dirname, 'src')));
+app.use(express.static('public'));
+
+// Définir EJS comme moteur de templates
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
 // Route pour la page d'accueil
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'src', 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Route pour la page d'authentification
