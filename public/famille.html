@@ -491,9 +491,9 @@
     }
   }
   
-  function deleteDeceased(index) {
+  function deleteDeceased(i) {
     if (confirm("Es-tu sûr de vouloir supprimer ce défunt ?")) {
-      deceasedList.splice(index, 1);
+      deceasedList.splice(i, 1);
       renderDefunts();
     }
   }
