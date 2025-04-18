@@ -271,15 +271,21 @@
         <p>Liste des utilisateurs :</p>
         <table id="user-table">
           <thead>
-            <tr><th>Nom</th><th>Prénom</th><th>Rôle</th><th>Actions</th></tr>
+            <tr><th>Nom</th><th>Prénom</th><th>Lien</th><th>Rôle</th><th>Actions</th></tr>
           </thead>
           <tbody id="user-list"></tbody>
         </table>
         <h3>Ajouter un utilisateur</h3>
         <form id="add-family-form">
-        <input id="family-nom" />
-        <input id="family-prenom" />
-        <input id="family-lien" />
+        <label for="family-nom">Nom :</label>
+        <input type="text" id="family-nom" required />
+      
+        <label for="family-prenom">Prénom :</label>
+        <input type="text" id="family-prenom" required />
+      
+        <label for="family-lien">Lien avec le défunt :</label>
+        <input type="text" id="family-lien" required />
+      
         <button type="submit">Ajouter</button>
       </form>
       <table>
