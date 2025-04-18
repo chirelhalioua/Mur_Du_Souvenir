@@ -566,7 +566,8 @@
           <td>${c.type}</td>
           <td>${c.detail}</td>
           <td>
-            <button class="delete-btn" onclick="deleteContact(${i})">Supprimer</button>
+          <button class="update-btn" onclick="updateContact(${i})">Modifier</button>
+          <button class="delete-btn" onclick="deleteContact(${i})">Supprimer</button>
           </td>
         </tr>`;
       });
@@ -584,6 +585,22 @@
       e.target.reset();
       renderContacts();
     });
+
+    function editContact(i) {
+      const c = contacts[i];
+      const defunt = prompt("Défunt", c.defunt);
+      const nom = prompt("Nom", c.nom);
+      const prenom = prompt("Prénom", c.prenom);
+      const lien = prompt("Lien avec le défunt", c.lien);
+      const type = prompt("Type de contact (Email/Téléphone)", c.type);
+      const detail = prompt("Détail", c.detail);
+    
+      if (defunt && nom && prenom && lien && type && detail) {
+        contacts[i] = { defunt, nom, prenom, lien, type, detail };
+        renderContacts();
+      }
+    }
+
 
     function deleteContact(i) {
       if (confirm('Supprimer ce contact ?')) {
