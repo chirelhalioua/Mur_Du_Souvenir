@@ -16,6 +16,8 @@ function createNavbar() {
           <li><a href="/" role="menuitem">Accueil</a></li>
           <li><a href="contact.html" role="menuitem">Contact</a></li>
           <li><a href="login.html" class="button" role="menuitem">Connexion/Inscription</a></li>
+          <li><a href="synagogue.html" class="button" role="menuitem">Gestion Synagogue</a></li>
+          <li><a href="famille.html" class="button" role="menuitem">Gestion Famille</a></li>
         </ul>
       </nav>
     `;
