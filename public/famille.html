@@ -587,19 +587,20 @@
     });
 
     function editContact(i) {
-      const ct = contacts[i];
-      const defunt = prompt("Défunt", c.defunt);
-      const nom = prompt("Nom", c.nom);
-      const prenom = prompt("Prénom", c.prenom);
-      const lien = prompt("Lien avec le défunt", c.lien);
-      const type = prompt("Type de contact (Email/Téléphone)", c.type);
-      const detail = prompt("Détail", c.detail);
-    
-      if (defunt && nom && prenom && lien && type && detail) {
-        contacts[i] = { defunt, nom, prenom, lien, type, detail };
-        renderContacts();
-      }
-    }
+  const c = contacts[i];
+  const defunt = prompt('Défunt', c.defunt);
+  const nom = prompt('Nom du contact', c.nom);
+  const prenom = prompt('Prénom du contact', c.prenom);
+  const lien = prompt('Lien avec le défunt', c.lien);
+  const type = prompt('Type', c.type);
+  const detail = prompt('Détail', c.detail);
+
+  if (defunt && nom && prenom && lien && type && detail) {
+    contacts[i] = { defunt, nom, prenom, lien, type, detail };
+    renderContacts();
+  }
+}
+
 
 
     function deleteContact(i) {
