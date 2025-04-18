@@ -451,41 +451,54 @@
 
     const deceasedList = [];
 
-    function renderDefunts() {
-      const list = document.getElementById('defunt-list');
-      list.innerHTML = '';
-      deceasedList.forEach((d, i) => {
-        list.innerHTML += `<tr>
-          <td>${d.name}</td><td>${d.firstName}</td><td>${d.deathDate}</td><td>${d.yahrzeit}</td>
-          <td><button class="edit-btn" onclick="editDeceased(${i})">Modifier</button></td>
-        </tr>`;
-      });
-    }
-
-    document.getElementById('add-defunt-form').addEventListener('submit', e => {
-      e.preventDefault();
-      const name = document.getElementById('defunt-name').value;
-      const firstName = document.getElementById('defunt-first-name').value;
-      const deathDate = document.getElementById('defunt-date').value;
-      const yahrzeit = document.getElementById('defunt-yahrzeit').value;
-      deceasedList.push({ name, firstName, deathDate, yahrzeit });
-      e.target.reset();
-      renderDefunts();
+      function renderDefunts() {
+    const list = document.getElementById('defunt-list');
+    list.innerHTML = '';
+    deceasedList.forEach((d, i) => {
+      list.innerHTML += `<tr>
+        <td>${d.name}</td>
+        <td>${d.firstName}</td>
+        <td>${d.deathDate}</td>
+        <td>${d.yahrzeit}</td>
+        <td>
+          <button class="edit-btn" onclick="editDeceased(${i})">Modifier</button>
+          <button class="delete-btn" onclick="deleteDeceased(${i})">Supprimer</button>
+        </td>
+      </tr>`;
     });
-
-    function editDeceased(i) {
-      const d = deceasedList[i];
-      const name = prompt('Nom', d.name);
-      const firstName = prompt('Prénom', d.firstName);
-      const deathDate = prompt('Date de décès', d.deathDate);
-      const yahrzeit = prompt('Yahrzeit', d.yahrzeit);
-      if (name && firstName && deathDate && yahrzeit) {
-        deceasedList[i] = { name, firstName, deathDate, yahrzeit };
-        renderDefunts();
-      }
-    }
-
+  }
+  
+  document.getElementById('add-defunt-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const name = document.getElementById('defunt-name').value;
+    const firstName = document.getElementById('defunt-first-name').value;
+    const deathDate = document.getElementById('defunt-date').value;
+    const yahrzeit = document.getElementById('defunt-yahrzeit').value;
+    deceasedList.push({ name, firstName, deathDate, yahrzeit });
+    e.target.reset();
     renderDefunts();
+  });
+  
+  function editDeceased(i) {
+    const d = deceasedList[i];
+    const name = prompt('Nom', d.name);
+    const firstName = prompt('Prénom', d.firstName);
+    const deathDate = prompt('Date de décès', d.deathDate);
+    const yahrzeit = prompt('Yahrzeit', d.yahrzeit);
+    if (name && firstName && deathDate && yahrzeit) {
+      deceasedList[i] = { name, firstName, deathDate, yahrzeit };
+      renderDefunts();
+    }
+  }
+  
+  function deleteDeceased(index) {
+    if (confirm("Es-tu sûr de vouloir supprimer ce défunt ?")) {
+      deceasedList.splice(index, 1);
+      renderDefunts();
+    }
+  }
+  
+  renderDefunts();
 
     const commemorations = [];
 
