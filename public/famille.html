@@ -400,217 +400,209 @@
       });
     });
 
-    const familyMembers = [
-      { name: 'Doe', firstName: 'John', role: 'Admin' },
-      { name: 'Smith', firstName: 'Jane', role: 'Membre de la famille' }
-    ];
+    const familyMembers = [];
 
-    function renderFamily() {
-      const list = document.getElementById('user-list');
-      list.innerHTML = '';
-      familyMembers.forEach((m, i) => {
-        list.innerHTML += `<tr>
-          <td>${m.name}</td><td>${m.firstName}</td><td>${m.role}</td>
-          <td>
-            <button class="edit-btn" onclick="editMember(${i})">Modifier</button>
-            <button class="delete-btn" onclick="deleteMember(${i})">Supprimer</button>
-          </td>
-        </tr>`;
-      });
-    }
-
-    document.getElementById('add-user-form').addEventListener('submit', e => {
-      e.preventDefault();
-      const name = document.getElementById('user-name').value;
-      const firstName = document.getElementById('user-first-name').value;
-      const role = document.getElementById('user-role').value;
-      familyMembers.push({ name, firstName, role });
-      e.target.reset();
-      renderFamily();
-    });
-
-    function editMember(i) {
-      const member = familyMembers[i];
-      const name = prompt('Nom', member.name);
-      const firstName = prompt('Prénom', member.firstName);
-      const role = prompt('Rôle', member.role);
-      if (name && firstName && role) {
-        familyMembers[i] = { name, firstName, role };
-        renderFamily();
-      }
-    }
-
-    function deleteMember(i) {
-      if (confirm('Supprimer ce membre ?')) {
-        familyMembers.splice(i, 1);
-        renderFamily();
-      }
-    }
-
-    renderFamily();
-
-    const deceasedList = [];
-
-      function renderDefunts() {
-    const list = document.getElementById('defunt-list');
-    list.innerHTML = '';
-    deceasedList.forEach((d, i) => {
-      list.innerHTML += `<tr>
-        <td>${d.name}</td>
-        <td>${d.firstName}</td>
-        <td>${d.deathDate}</td>
-        <td>${d.yahrzeit}</td>
-        <td>
-          <button class="edit-btn" onclick="editDeceased(${i})">Modifier</button>
-          <button class="delete-btn" onclick="deleteDeceased(${i})">Supprimer</button>
-        </td>
-      </tr>`;
-    });
-  }
-  
-  document.getElementById('add-defunt-form').addEventListener('submit', e => {
-    e.preventDefault();
-    const name = document.getElementById('defunt-name').value;
-    const firstName = document.getElementById('defunt-first-name').value;
-    const deathDate = document.getElementById('defunt-date').value;
-    const yahrzeit = document.getElementById('defunt-yahrzeit').value;
-    deceasedList.push({ name, firstName, deathDate, yahrzeit });
-    e.target.reset();
-    renderDefunts();
+function renderFamilyMembers() {
+  const list = document.getElementById('family-list');
+  list.innerHTML = '';
+  familyMembers.forEach((m, i) => {
+    list.innerHTML += `<tr>
+      <td>${m.nom}</td>
+      <td>${m.prenom}</td>
+      <td>${m.lien}</td>
+      <td>
+        <button class="edit-btn" onclick="editFamilyMember(${i})">Modifier</button>
+        <button class="delete-btn" onclick="deleteFamilyMember(${i})">Supprimer</button>
+      </td>
+    </tr>`;
   });
-  
-  function editDeceased(i) {
-    const d = deceasedList[i];
-    const name = prompt('Nom', d.name);
-    const firstName = prompt('Prénom', d.firstName);
-    const deathDate = prompt('Date de décès', d.deathDate);
-    const yahrzeit = prompt('Yahrzeit', d.yahrzeit);
-    if (name && firstName && deathDate && yahrzeit) {
-      deceasedList[i] = { name, firstName, deathDate, yahrzeit };
-      renderDefunts();
-    }
+}
+
+document.getElementById('add-family-form').addEventListener('submit', e => {
+  e.preventDefault();
+  const nom = document.getElementById('family-nom').value;
+  const prenom = document.getElementById('family-prenom').value;
+  const lien = document.getElementById('family-lien').value;
+  familyMembers.push({ nom, prenom, lien });
+  e.target.reset();
+  renderFamilyMembers();
+});
+
+function editFamilyMember(i) {
+  const m = familyMembers[i];
+  const nom = prompt("Nom:", m.nom);
+  const prenom = prompt("Prénom:", m.prenom);
+  const lien = prompt("Lien:", m.lien);
+  if (nom && prenom && lien) {
+    familyMembers[i] = { nom, prenom, lien };
+    renderFamilyMembers();
   }
-  
-  function deleteDeceased(i) {
-    if (confirm("Es-tu sûr de vouloir supprimer ce défunt ?")) {
-      deceasedList.splice(i, 1);
-      renderDefunts();
-    }
+}
+
+function deleteFamilyMember(i) {
+  if (confirm("Supprimer ce membre ?")) {
+    familyMembers.splice(i, 1);
+    renderFamilyMembers();
   }
-  
-  renderDefunts();
+}
 
-    const commemorations = [];
+renderFamilyMembers();
 
-    function renderCommemorations() {
-      const list = document.getElementById('commemoration-list');
-      list.innerHTML = '';
-      commemorations.forEach((c, i) => {
-        list.innerHTML += `
-          <tr>
-            <td>${c.defunt}</td>
-            <td>${c.date}</td>
-            <td>${c.lieu}</td>
-            <td>${c.details}</td>
-            <td>
-              <button class="edit-btn" onclick="editCommemoration(${i})">Modifier</button>
-              <button class="delete-btn" onclick="deleteCommemoration(${i})">Supprimer</button>
-            </td>
-          </tr>`;
-      });
-    }
+const deceasedList = [];
 
-    document.getElementById('commemorationForm').addEventListener('submit', e => {
-      e.preventDefault();
-      const defunt = document.getElementById('deceased').value;
-      const date = document.getElementById('date').value;
-      const lieu = document.getElementById('lieu').value;
-      const details = document.getElementById('details').value;
-      commemorations.push({ defunt, date, lieu, details });
-      e.target.reset();
-      renderCommemorations();
-    });
+function renderDeceased() {
+  const list = document.getElementById('deceased-list');
+  list.innerHTML = '';
+  deceasedList.forEach((d, i) => {
+    list.innerHTML += `<tr>
+      <td>${d.nom}</td>
+      <td>${d.prenom}</td>
+      <td>${d.dateNaissance}</td>
+      <td>${d.dateDeces}</td>
+      <td>
+        <button class="edit-btn" onclick="editDeceased(${i})">Modifier</button>
+        <button class="delete-btn" onclick="deleteDeceased(${i})">Supprimer</button>
+      </td>
+    </tr>`;
+  });
+}
 
-    function editCommemoration(i) {
-      const c = commemorations[i];
-      const defunt = prompt('Défunt', c.defunt);
-      const date = prompt('Date', c.date);
-      const lieu = prompt('Lieu', c.lieu);
-      const details = prompt('Détails', c.details);
-      if (defunt && date && lieu && details) {
-        commemorations[i] = { defunt, date, lieu, details };
-        renderCommemorations();
-      }
-    }
+document.getElementById('add-deceased-form').addEventListener('submit', e => {
+  e.preventDefault();
+  const nom = document.getElementById('deceased-nom').value;
+  const prenom = document.getElementById('deceased-prenom').value;
+  const dateNaissance = document.getElementById('deceased-date-naissance').value;
+  const dateDeces = document.getElementById('deceased-date-deces').value;
+  deceasedList.push({ nom, prenom, dateNaissance, dateDeces });
+  e.target.reset();
+  renderDeceased();
+});
 
-    function deleteCommemoration(i) {
-      if (confirm('Supprimer cette commémoration ?')) {
-        commemorations.splice(i, 1);
-        renderCommemorations();
-      }
-    }
+function editDeceased(i) {
+  const d = deceasedList[i];
+  const nom = prompt("Nom:", d.nom);
+  const prenom = prompt("Prénom:", d.prenom);
+  const dateNaissance = prompt("Date de naissance:", d.dateNaissance);
+  const dateDeces = prompt("Date de décès:", d.dateDeces);
+  if (nom && prenom && dateNaissance && dateDeces) {
+    deceasedList[i] = { nom, prenom, dateNaissance, dateDeces };
+    renderDeceased();
+  }
+}
 
+function deleteDeceased(i) {
+  if (confirm("Supprimer ce défunt ?")) {
+    deceasedList.splice(i, 1);
+    renderDeceased();
+  }
+}
+
+renderDeceased();
+
+const commemorations = [];
+
+function renderCommemorations() {
+  const list = document.getElementById('commemoration-list');
+  list.innerHTML = '';
+  commemorations.forEach((c, i) => {
+    list.innerHTML += `<tr>
+      <td>${c.defunt}</td>
+      <td>${c.date}</td>
+      <td>${c.type}</td>
+      <td>
+        <button class="edit-btn" onclick="editCommemoration(${i})">Modifier</button>
+        <button class="delete-btn" onclick="deleteCommemoration(${i})">Supprimer</button>
+      </td>
+    </tr>`;
+  });
+}
+
+document.getElementById('add-commemoration-form').addEventListener('submit', e => {
+  e.preventDefault();
+  const defunt = document.getElementById('defunt-name').value;
+  const date = document.getElementById('commemoration-date').value;
+  const type = document.getElementById('commemoration-type').value;
+  commemorations.push({ defunt, date, type });
+  e.target.reset();
+  renderCommemorations();
+});
+
+function editCommemoration(i) {
+  const c = commemorations[i];
+  const defunt = prompt("Nom du défunt:", c.defunt);
+  const date = prompt("Date:", c.date);
+  const type = prompt("Type:", c.type);
+  if (defunt && date && type) {
+    commemorations[i] = { defunt, date, type };
     renderCommemorations();
+  }
+}
 
-    const contacts = [];
+function deleteCommemoration(i) {
+  if (confirm("Supprimer cette commémoration ?")) {
+    commemorations.splice(i, 1);
+    renderCommemorations();
+  }
+}
 
-    function renderContacts() {
-      const list = document.getElementById('contact-list');
-      list.innerHTML = '';
-      contacts.forEach((c, i) => {
-        list.innerHTML += `<tr>
-          <td>${c.defunt}</td>
-          <td>${c.nom}</td>
-          <td>${c.prenom}</td>
-          <td>${c.lien}</td>
-          <td>${c.type}</td>
-          <td>${c.detail}</td>
-          <td>
-          <button class="update-btn" onclick="updateContact(${i})">Modifier</button>
-          <button class="delete-btn" onclick="deleteContact(${i})">Supprimer</button>
-          </td>
-        </tr>`;
-      });
-    }
+renderCommemorations();
 
-    document.getElementById('add-contact-form').addEventListener('submit', e => {
-      e.preventDefault();
-      const defunt = document.getElementById('defunt-name-contact').value;
-      const type = document.getElementById('contact-type').value;
-      const detail = document.getElementById('contact-detail').value;
-      const nom = document.getElementById('contact-nom').value;
-      const prenom = document.getElementById('contact-prenom').value;
-      const lien = document.getElementById('contact-lien').value;
-      contacts.push({ defunt, type, detail, nom, prenom, lien });
-      e.target.reset();
-      renderContacts();
-    });
+const contacts = [];
 
-    function editContact(i) {
+function renderContacts() {
+  const list = document.getElementById('contact-list');
+  list.innerHTML = '';
+  contacts.forEach((c, i) => {
+    list.innerHTML += `<tr>
+      <td>${c.defunt}</td>
+      <td>${c.nom}</td>
+      <td>${c.prenom}</td>
+      <td>${c.lien}</td>
+      <td>${c.type}</td>
+      <td>${c.detail}</td>
+      <td>
+        <button class="edit-btn" onclick="editContact(${i})">Modifier</button>
+        <button class="delete-btn" onclick="deleteContact(${i})">Supprimer</button>
+      </td>
+    </tr>`;
+  });
+}
+
+document.getElementById('add-contact-form').addEventListener('submit', e => {
+  e.preventDefault();
+  const defunt = document.getElementById('defunt-name-contact').value;
+  const nom = document.getElementById('contact-nom').value;
+  const prenom = document.getElementById('contact-prenom').value;
+  const lien = document.getElementById('contact-lien').value;
+  const type = document.getElementById('contact-type').value;
+  const detail = document.getElementById('contact-detail').value;
+  contacts.push({ defunt, nom, prenom, lien, type, detail });
+  e.target.reset();
+  renderContacts();
+});
+
+function editContact(i) {
   const c = contacts[i];
-  const defunt = prompt('Défunt', c.defunt);
-  const nom = prompt('Nom du contact', c.nom);
-  const prenom = prompt('Prénom du contact', c.prenom);
-  const lien = prompt('Lien avec le défunt', c.lien);
-  const type = prompt('Type', c.type);
-  const detail = prompt('Détail', c.detail);
-
+  const defunt = prompt("Défunt:", c.defunt);
+  const nom = prompt("Nom:", c.nom);
+  const prenom = prompt("Prénom:", c.prenom);
+  const lien = prompt("Lien avec le défunt:", c.lien);
+  const type = prompt("Type de contact (Email/Téléphone):", c.type);
+  const detail = prompt("Détail:", c.detail);
   if (defunt && nom && prenom && lien && type && detail) {
     contacts[i] = { defunt, nom, prenom, lien, type, detail };
     renderContacts();
   }
 }
 
-
-
-    function deleteContact(i) {
-      if (confirm('Supprimer ce contact ?')) {
-        contacts.splice(i, 1);
-        renderContacts();
-      }
-    }
-
+function deleteContact(i) {
+  if (confirm("Supprimer ce contact ?")) {
+    contacts.splice(i, 1);
     renderContacts();
+  }
+}
+
+renderContacts();
   </script>
 </body>
 </html>
