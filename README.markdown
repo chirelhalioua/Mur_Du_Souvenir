@@ -1,6 +1,6 @@
-# 🕊️ Mémoire Partagée
+# 🕯️ Mémoire Partagée
 
-Mémoire Partagée est une plateforme web conçue pour honorer la mémoire des défunts en offrant aux familles et aux communautés religieuses un espace sécurisé pour partager, se souvenir et gérer les hommages.
+Mur du Souvenir est une plateforme web conçue pour honorer la mémoire des défunts en offrant aux familles et aux communautés religieuses un espace sécurisé pour partager, se souvenir et gérer les hommages.
 
 ## 🌟 À propos du projet
 
@@ -30,8 +30,8 @@ Dans les moments de deuil, il est essentiel de disposer d'un lieu où l'on peut 
 
 1. Clonez le dépôt :
    ```bash
-   git clone https://github.com/votre-utilisateur/memoire-partagee.git
-   cd memoire-partagee
+   git clone https://github.com/chirelhalioua/mur_du_souvenir.git
+   cd mur_du_souvenir
    ```
 
 2. Créez et activez un environnement virtuel :
