@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+  :root {
+    --beige: #F5F5DC;
+    --dark-brown: #8B4513;
+    --light-brown: #A0522D;
+    --cream: #FFF8DC;
+    --white: #FFFFFF;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+  }
+
+  .profile-container {
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 40px;
+    background-color: var(--cream);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    font-family: 'Segoe UI', sans-serif;
+    color: var(--dark-brown);
+    transition: var(--transition);
+  }
+
+  .profile-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: var(--dark-brown);
+  }
+
+  .profile-section {
+    margin-bottom: 25px;
+  }
+
+  .profile-section h2 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: var(--light-brown);
+  }
+
+  .profile-section p {
+    font-size: 1.1rem;
+    margin: 0;
+    color: var(--dark-brown);
+  }
+
+  .logout-button {
+    display: inline-block;
+    margin-top: 40px;
+    padding: 12px 24px;
+    background-color: var(--dark-brown);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: var(--transition);
+  }
+
+  .logout-button:hover {
+    background-color: var(--light-brown);
+  }
+</style>
+
+<div class="profile-container">
+  <div class="profile-header">
+    <h1>Bienvenue, {{ user.username }}</h1>
+  </div>
+
+  <div class="profile-section">
+    <h2>Type de compte :</h2>
+    <p>
+      {% if user.user_type == 'family' %}
+        Famille
+      {% elif user.user_type == 'synagogue' %}
+        Synagogue
+      {% else %}
+        Non défini
+      {% endif %}
+    </p>
+  </div>
+
+  <div class="profile-section">
+    <h2>Nom du profil :</h2>
+    <p>
+      {% if user.user_type == 'family' %}
+        {{ user.family.name|default:"Non défini" }}
+      {% elif user.user_type == 'synagogue' %}
+        {{ user.synagogue.name|default:"Non défini" }}
+      {% else %}
+        Non défini
+      {% endif %}
+    </p>
+  </div>
+
+  <div class="profile-section">
+    <h2>Numéro de téléphone :</h2>
+    <p>
+      {% if user.user_type == 'family' %}
+        {{ user.family.phone|default:"Non défini" }}
+      {% elif user.user_type == 'synagogue' %}
+        {{ user.synagogue.phone|default:"Non défini" }}
+      {% else %}
+        Non défini
+      {% endif %}
+    </p>
+  </div>
+
+  <div class="profile-section">
+    <h2>Adresse :</h2>
+    <p>
+      {% if user.user_type == 'family' %}
+        {{ user.family.address|default:"Non définie" }}
+      {% elif user.user_type == 'synagogue' %}
+        {{ user.synagogue.address|default:"Non définie" }}
+      {% else %}
+        Non définie
+      {% endif %}
+    </p>
+  </div>
+
+  <a href="{% url 'siteweb:logout' %}" class="logout-button">Se déconnecter</a>
+</div>
+{% endblock %}

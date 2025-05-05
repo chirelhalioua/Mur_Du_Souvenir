@@ -1,0 +1,248 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="auth-container">
+    <h2>Connexion / Inscription</h2>
+
+    <div class="tab-selector">
+        <button id="tab-login" class="tab active">Connexion</button>
+        <button id="tab-register" class="tab">Inscription</button>
+    </div>
+
+    <div class="auth-box">
+        <!-- Connexion -->
+        <div id="login-form" class="form-panel active">
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="login" value="1">
+                {% for field in login_form %}
+                    <div class="form-group">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="error">{{ field.errors|join:", " }}</div>
+                        {% endif %}
+                        {% if field.help_text %}
+                            <div class="help-text">{{ field.help_text }}</div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-login">Se connecter</button>
+            </form>
+        </div>
+
+        <!-- Inscription -->
+        <div id="register-form" class="form-panel">
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="register" value="1">
+                {% for field in register_form %}
+                    <div class="form-group {% if field.name in 'family_name family_address family_phone synagogue_name synagogue_address synagogue_phone' %}conditional-field{% endif %}"
+                         {% if field.name in 'family_name family_address family_phone' %}data-group="family" style="display: none;"{% endif %}
+                         {% if field.name in 'synagogue_name synagogue_address synagogue_phone' %}data-group="synagogue" style="display: none;"{% endif %}>
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="error">{{ field.errors|join:", " }}</div>
+                        {% endif %}
+                        {% if field.help_text %}
+                            <div class="help-text">{{ field.help_text }}</div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-register">S'inscrire</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+:root {
+    --beige: #F5F5DC;
+    --dark-brown: #8B4513;
+    --light-brown: #A0522D;
+    --cream: #FFF8DC;
+    --white: #FFFFFF;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+body {
+    background-color: var(--white);
+}
+
+.auth-container {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 2rem;
+    font-family: 'Arial', sans-serif;
+    background-color: var(--cream);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+
+.auth-container h2 {
+    text-align: center;
+    color: var(--dark-brown);
+    margin-bottom: 1.5rem;
+}
+
+.tab-selector {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.tab {
+    padding: 0.75rem 1.5rem;
+    background-color: var(--beige);
+    border: none;
+    border-radius: 8px 8px 0 0;
+    margin: 0 0.25rem;
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--dark-brown);
+    transition: var(--transition);
+}
+
+.tab.active {
+    background-color: var(--white);
+    box-shadow: var(--shadow);
+}
+
+.auth-box {
+    background-color: var(--white);
+    padding: 2rem;
+    border-radius: 0 0 12px 12px;
+    box-shadow: var(--shadow);
+}
+
+.form-panel {
+    display: none;
+}
+
+.form-panel.active {
+    display: block;
+}
+
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    color: var(--dark-brown);
+    margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid var(--beige);
+    border-radius: 8px;
+    background-color: var(--cream);
+    font-size: 1rem;
+    color: var(--dark-brown);
+    transition: var(--transition);
+}
+
+.form-group input:focus {
+    border-color: var(--light-brown);
+    background-color: var(--white);
+    outline: none;
+}
+
+.help-text {
+    font-size: 0.85rem;
+    color: var(--dark-brown);
+    opacity: 0.7;
+}
+
+.error {
+    font-size: 0.85rem;
+    color: #d32f2f;
+    margin-top: 0.25rem;
+}
+
+.btn {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0.75rem;
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.btn-login {
+    background-color: var(--dark-brown);
+}
+
+.btn-login:hover {
+    background-color: var(--light-brown);
+}
+
+.btn-register {
+    background-color: var(--light-brown);
+}
+
+.btn-register:hover {
+    background-color: var(--dark-brown);
+}
+
+.form-group textarea {
+    height: 100px; 
+    resize: vertical;
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const loginTab = document.getElementById("tab-login");
+    const registerTab = document.getElementById("tab-register");
+    const loginForm = document.getElementById("login-form");
+    const registerForm = document.getElementById("register-form");
+    const userTypeSelect = document.querySelector('select[name="user_type"]');
+    const familyFields = document.querySelectorAll('.form-group[data-group="family"]');
+    const synagogueFields = document.querySelectorAll('.form-group[data-group="synagogue"]');
+
+    // Gestion des onglets
+    loginTab.addEventListener("click", () => {
+        loginTab.classList.add("active");
+        registerTab.classList.remove("active");
+        loginForm.classList.add("active");
+        registerForm.classList.remove("active");
+    });
+
+    registerTab.addEventListener("click", () => {
+        registerTab.classList.add("active");
+        loginTab.classList.remove("active");
+        registerForm.classList.add("active");
+        loginForm.classList.remove("active");
+    });
+
+    // Afficher/masquer les champs conditionnels selon user_type
+    function updateConditionalFields() {
+        const userType = userTypeSelect.value;
+        familyFields.forEach(field => {
+            field.style.display = userType === 'family' ? 'block' : 'none';
+        });
+        synagogueFields.forEach(field => {
+            field.style.display = userType === 'synagogue' ? 'block' : 'none';
+        });
+    }
+
+    if (userTypeSelect) {
+        userTypeSelect.addEventListener('change', updateConditionalFields);
+        updateConditionalFields(); // Appeler au chargement pour initialiser
+    }
+});
+</script>
+{% endblock %}

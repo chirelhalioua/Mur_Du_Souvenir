@@ -1,0 +1,265 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="mur-contact-container">
+    <!-- Titre -->
+    <h2 class="mur-contact-title">Nous contacter</h2>
+    <p class="mur-contact-subtitle">L’équipe de Mur aux Souvenirs est là pour vous accompagner dans la création d’hommages mémorables.</p>
+
+    <!-- Section Informations de Contact -->
+    <div class="mur-contact-info">
+      <div class="mur-contact-item">
+        <i class="fas fa-envelope" aria-hidden="true"></i>
+        <div class="mur-contact-text">
+          <span class="mur-contact-label">Email</span>
+          <a href="mailto:contact@murdusouvenir.com" aria-label="Envoyer un email à Mur aux Souvenirs">contact@murdusouvenir.com</a>
+        </div>
+      </div>
+      <div class="mur-contact-item">
+        <i class="fab fa-linkedin" aria-hidden="true"></i>
+        <div class="mur-contact-text">
+          <span class="mur-contact-label">LinkedIn</span>
+          <a href="https://www.linkedin.com/company/mur-du-souvenir" target="_blank" aria-label="Suivez Mur aux Souvenirs sur LinkedIn">Suivez-nous sur LinkedIn</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Appel à l’action -->
+    <div class="mur-contact-cta-section">
+      <p>Envie de créer un espace hommage pour un être cher ?</p>
+      <a href="{% url 'siteweb:home' %}" class="mur-contact-cta-button">Découvrir Mur aux Souvenirs</a>
+    </div>
+  </div>
+{% endblock %}
+
+{% block styles %}
+  <style>
+    /* Fond de la page entière */
+    body {
+      background-color: #FFFFFF;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Container */
+    .mur-contact-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 4rem 1rem;
+      font-family: 'Georgia', serif;
+      background: #FFF8DC;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-radius:10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Titre Principal */
+    .mur-contact-title {
+      color: #2F2F2F;
+      font-size: 2.8rem;
+      font-weight: 400;
+      text-align: center;
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+      position: relative;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .mur-contact-title::after {
+      content: '';
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(to right, #A67C00, #D4A017);
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 1px;
+    }
+
+    /* Sous-titre */
+    .mur-contact-subtitle {
+      color: #4A4A4A;
+      font-size: 1.2rem;
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      margin-bottom: 3rem;
+      max-width: 600px;
+      line-height: 1.6;
+    }
+
+    /* Section Informations de Contact */
+    .mur-contact-info {
+      background: #FFFFFF;
+      border-radius: 15px;
+      padding: 2.5rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .mur-contact-info:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+    }
+
+    .mur-contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      font-size: 1.15rem;
+      color: #2F2F2F;
+    }
+
+    .mur-contact-item i {
+      font-size: 2.2rem;
+      color: #8B4513;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .mur-contact-item:hover i {
+      transform: scale(1.15);
+    }
+
+    .mur-contact-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mur-contact-label {
+      font-size: 0.9rem;
+      color: #6B6B6B;
+      font-family: 'Arial', sans-serif;
+      margin-bottom: 0.3rem;
+    }
+
+    .mur-contact-item a {
+      color: #2F2F2F;
+      font-weight: 500;
+      text-decoration: none;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .mur-contact-item a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -2px;
+      left: 0;
+      background: #A67C00;
+      transition: width 0.3s ease;
+    }
+
+    .mur-contact-item a:hover::after {
+      width: 100%;
+    }
+
+    .mur-contact-item a:hover {
+      color: #A67C00;
+    }
+
+    /* Appel à l’action */
+    .mur-contact-cta-section {
+      text-align: center;
+      margin-top: 3rem;
+    }
+
+    .mur-contact-cta-section p {
+      color: #4A4A4A;
+      font-size: 1.1rem;
+      font-family: 'Arial', sans-serif;
+      margin-bottom: 1.5rem;
+    }
+
+    .mur-contact-cta-button {
+      display: inline-block;
+      padding: 0.9rem 2rem;
+      background: linear-gradient(to right, #8B4513, #D4A017);
+      color: #FFFFFF;
+      font-size: 1.1rem;
+      font-family: 'Arial', sans-serif;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .mur-contact-cta-button:hover {
+      background: linear-gradient(to right, #8B4513, #D4A017);
+      transform: translateY(-3px);
+    }
+
+    .mur-contact-cta-button:active {
+      transform: translateY(0);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .mur-contact-title {
+        font-size: 2.2rem;
+      }
+
+      .mur-contact-subtitle {
+        font-size: 1rem;
+      }
+
+      .mur-contact-item {
+        font-size: 1rem;
+      }
+
+      .mur-contact-item i {
+        font-size: 1.8rem;
+      }
+
+      .mur-contact-info {
+        padding: 2rem;
+      }
+
+      .mur-contact-cta-button {
+        padding: 0.8rem 1.8rem;
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .mur-contact-container {
+        padding: 2.5rem 0.5rem;
+      }
+
+      .mur-contact-title {
+        font-size: 1.8rem;
+      }
+
+      .mur-contact-subtitle {
+        font-size: 0.9rem;
+      }
+
+      .mur-contact-item {
+        font-size: 0.95rem;
+      }
+
+      .mur-contact-item i {
+        font-size: 1.5rem;
+      }
+
+      .mur-contact-info {
+        padding: 1.5rem;
+      }
+    }
+
+    /* Accessibilité */
+    .mur-contact-item a:focus,
+    .mur-contact-cta-button:focus {
+      outline: 3px solid #A67C00;
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+  </style>
+{% endblock %}

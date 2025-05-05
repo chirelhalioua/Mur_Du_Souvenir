@@ -1,0 +1,650 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Mur du Souvenir - Espace d'Hommage pour Familles et Synagogues{% endblock %}
+
+{% block styles %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --beige: #F5F5DC;
+      --dark-brown: #8B4513;
+      --light-brown: #A0522D;
+      --cream: #FFF8DC;
+      --white: #FFFFFF;
+      --text-color: #333333;
+      --accent-color: #8B4513;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+      --heading-font: 'Playfair Display', serif;
+      --body-font: 'Poppins', sans-serif;
+    }
+
+    /* Réinitialisation globale */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, main {
+      width: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      overflow-x: hidden;
+      font-family: var(--body-font);
+      background-color: var(--white);
+      color: var(--text-color);
+    }
+
+    /* Hero Section */
+    .hero {
+      width: 100%;
+      min-height: 75vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4rem 0;
+      margin: 0;
+      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                  url('https://images.unsplash.com/photo-1595062584313-47018e0ee5cb?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Ym91Z2llJTIwaG9tbWFnZXxlbnwwfHwwfHx8MA%3D%3D') center/cover no-repeat;
+      color: var(--white);
+    }
+
+    .hero-content {
+      width: 100%;
+      max-width: none;
+      padding: 0 1rem;
+      text-align: center;
+    }  
+
+    .hero h1 {
+      font-family: var(--heading-font);
+      font-size: 4rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--white);
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      margin-bottom: 2rem;
+      color: var(--cream);
+      opacity: 0.8;
+      line-height: 1.6;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background: var(--accent-color);
+      color: var(--white);
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .cta-button:hover {
+      background: var(--light-brown);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    /* Candle Container (avant la section Features) */
+    .candle-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      padding: 2rem 0;
+      background: var(--white);
+    }
+
+    .candle-container svg {
+      width: 150px;
+      height: 150px;
+    }
+
+    /* Animation pour la flamme */
+    @keyframes flicker {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 0.9;
+      }
+      50% {
+        transform: scale(1.1);
+        opacity: 1;
+      }
+      75% {
+        transform: scale(0.9);
+        opacity: 0.7;
+      }
+    }
+
+    .flame {
+      animation: flicker 2s ease-in-out infinite;
+    }
+
+    /* Features Section */
+    .features {
+      width: 100%;
+      padding: 0.5rem 0 2rem 0;
+      margin: 0;
+    }
+
+    .features h2 {
+      text-align: center;
+      font-family: var(--heading-font);
+      font-size: 2.5rem;
+      color: var(--accent-color);
+      margin: 0 0 3rem 0;
+      padding: 0 1rem;
+    }
+
+    .target-audience {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      width: 100%;
+      max-width: none;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .target-card {
+      background: var(--white);
+      padding: 2.5rem;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      border: 1px solid var(--accent-color);
+    }
+
+    .target-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .target-card i {
+      font-size: 2.5rem;
+      color: var(--accent-color);
+      margin-bottom: 1.5rem;
+    }
+
+    .target-card h3 {
+      font-family: var(--heading-font);
+      font-size: 1.8rem;
+      color: var(--accent-color);
+      margin-bottom: 1rem;
+    }
+
+    .target-card p {
+      color: var(--text-color);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .feature-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 0.8rem;
+      color: var(--text-color);
+    }
+
+    .feature-list i {
+      color: var(--accent-color);
+      font-size: 1rem;
+    }
+
+    /* Testimonials Section */
+    .testimonials-wrapper {
+      width: 100%;
+      background: var(--white);
+      margin: 0;
+      padding: 4rem 0;
+    }
+
+    .testimonials {
+      width: 100%;
+      max-width: none;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .testimonials h2 {
+      text-align: center;
+      font-family: var(--heading-font);
+      font-size: 2.5rem;
+      color: var(--accent-color);
+      margin-bottom: 3rem;
+      padding: 0;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      width: 100%;
+      padding: 0;
+    }
+
+    .testimonial-card {
+      background: #F5DEB3;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      min-width: 0;
+    }
+
+    .testimonial-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .testimonial-info h4 {
+      font-family: var(--heading-font);
+      color: var(--accent-color);
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    .testimonial-info p {
+      color: var(--text-color);
+      opacity: 0.8;
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
+    .testimonial-card blockquote {
+      font-style: italic;
+      color: var(--text-color);
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      border-left: 3px solid var(--accent-color);
+      padding-left: 1rem;
+      font-size: 1.1rem;
+    }
+
+    /* FAQ Section */
+    .faq-wrapper {
+      width: 100%;
+      background: var(--cream);
+      padding: 4rem 0;
+      margin: 0;
+    }
+
+    .faq {
+      width: 100%;
+      max-width: none;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .faq h2 {
+      text-align: center;
+      font-family: var(--heading-font);
+      font-size: 2.5rem;
+      color: var(--accent-color);
+      margin-bottom: 2rem;
+    }
+
+    .faq-item {
+      background: var(--white);
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow);
+      overflow: visible;
+    }
+
+    .faq-item.active {
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .faq-question {
+      padding: 1.5rem;
+      font-family: var(--body-font);
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--dark-brown);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: var(--transition);
+    }
+
+    .faq-question:hover {
+      background: var(--beige);
+    }
+
+    .faq-question i {
+      font-size: 1.2rem;
+      color: var(--accent-color);
+      transition: transform 0.3s ease;
+    }
+
+    .faq-item.active .faq-question i {
+      transform: rotate(180deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      padding: 0 1.5rem;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--text-color);
+      background: var(--white);
+      transition: max-height 0.5s ease, padding 0.5s ease;
+    }
+
+    .faq-item.active .faq-answer {
+      padding: 1.5rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 992px) {
+      .target-audience {
+        grid-template-columns: 1fr;
+        padding: 0 0.5rem;
+      }
+
+      .testimonials-grid {
+        grid-template-columns: 1fr;
+        padding: 0;
+      }
+
+      .faq {
+        padding: 0 0.5rem;
+      }
+
+      .candle-container svg {
+        width: 120px;
+        height: 120px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding: 2rem 0;
+      }
+
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .cta-button {
+        font-size: 1rem;
+        padding: 0.75rem 2rem;
+        width: auto;
+      }
+
+      .features h2,
+      .testimonials h2,
+      .faq h2 {
+        font-size: 2rem;
+      }
+
+      .target-card {
+        padding: 2rem 1rem;
+      }
+
+      .testimonial-card {
+        padding: 1.5rem 1rem;
+      }
+
+      .faq-question {
+        font-size: 1rem;
+        padding: 1.2rem;
+      }
+
+      .faq-answer {
+        font-size: 0.9rem;
+      }
+
+      .candle-container svg {
+        width: 100px;
+        height: 100px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+
+      .hero p {
+        font-size: 0.95rem;
+      }
+
+      .cta-button {
+        width: 100%;
+      }
+
+      .target-card h3 {
+        font-size: 1.5rem;
+      }
+
+      .target-card i {
+        font-size: 2rem;
+      }
+
+      .testimonial-info h4 {
+        font-size: 1rem;
+      }
+
+      .testimonial-card blockquote {
+        font-size: 1rem;
+      }
+
+      .faq-question {
+        font-size: 0.9rem;
+      }
+
+      .faq-answer {
+        font-size: 0.85rem;
+      }
+
+      .candle-container svg {
+        width: 80px;
+        height: 80px;
+      }
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Mur du Souvenir</h1>
+      <p>Un espace dédié à la mémoire de vos proches disparus. Créez des hommages intemporels et partagez des souvenirs précieux dans un cadre respectueux et serein.</p>
+      {% if user.is_authenticated %}
+        <a href="{% url 'siteweb:profile' %}" class="cta-button">Mon Profil</a>
+      {% else %}
+        <a href="{% url 'siteweb:auth' %}" class="cta-button">Se connecter / S'inscrire</a>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- Candle Section -->
+  <div class="candle-container">
+    <svg width="150" height="150" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <!-- Corps de la bougie -->
+      <rect x="40" y="30" width="20" height="50" rx="5" fill="#FFF8DC" stroke="#8B4513" stroke-width="1"/>
+      <!-- Mèche -->
+      <line x1="50" y1="30" x2="50" y2="20" stroke="#333333" stroke-width="2"/>
+      <!-- Flamme extérieure -->
+      <path class="flame" d="M50 20 C45 10, 55 10, 50 0 C48 5, 52 5, 50 0" fill="#8B4513" opacity="0.9"/>
+      <!-- Flamme intérieure -->
+      <path class="flame" d="M50 18 C46 12, 54 12, 50 6 C49 10, 51 10, 50 6" fill="#FFA500" opacity="0.7"/>
+    </svg>
+  </div>
+
+  <!-- Features Section -->
+  <section class="features">
+    <h2>Nos Fonctionnalités</h2>
+    <div class="target-audience">
+      <div class="target-card">
+        <i class="fas fa-users"></i>
+        <h3>Pour les Familles</h3>
+        <p>Créez un espace de mémoire personnalisé pour honorer vos proches disparus. Partagez des photos, des histoires et des souvenirs avec votre famille.</p>
+        <ul class="feature-list">
+          <li><i class="fas fa-check"></i> Création de profils personnalisés</li>
+          <li><i class="fas fa-check"></i> Gestion des défunts</li>
+          <li><i class="fas fa-check"></i> Arbre généalogique, galerie photos et vidéos</li>
+          <li><i class="fas fa-check"></i> Commémorations annuelles</li>
+          <li><i class="fas fa-check"></i> Communication avec les membres de la famille</li>
+        </ul>
+      </div>
+      <div class="target-card">
+        <i class="fas fa-synagogue"></i>
+        <h3>Pour les Synagogues</h3>
+        <p>Gérez et préservez la mémoire collective de votre communauté. Créez un espace dédié pour honorer les membres de votre synagogue.</p>
+        <ul class="feature-list">
+          <li><i class="fas fa-check"></i> Gestion des profils communautaires</li>
+          <li><i class="fas fa-check"></i> Gestion des défunts </li>
+          <li><i class="fas fa-check"></i> Organisation des commémorations</li>
+          <li><i class="fas fa-check"></i> Communication avec les familles</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials-wrapper">
+    <div class="testimonials">
+      <h2>Témoignages</h2>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-info">
+            <h4>Famille Cohen</h4>
+            <p>Paris, France</p>
+          </div>
+          <blockquote>
+            "Le Mur du Souvenir nous a permis de créer un espace de mémoire magnifique pour notre grand-père. Toute la famille peut maintenant partager ses souvenirs et honorer sa mémoire ensemble."
+          </blockquote>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-info">
+            <h4>Synagogue Beth-El</h4>
+            <p>Lyon, France</p>
+          </div>
+          <blockquote>
+            "En tant que synagogue, nous avons trouvé dans le Mur du Souvenir un outil précieux pour préserver notre histoire et honorer nos membres disparus. C'est un véritable trésor pour notre communauté."
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq-wrapper">
+    <div class="faq">
+      <h2>Questions Fréquentes</h2>
+      <div class="faq-item">
+        <div class="faq-question">
+          Qu'est-ce que le Mur du Souvenir ?
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          Le Mur du Souvenir est une plateforme en ligne dédiée à la préservation de la mémoire des proches disparus. Elle permet aux familles et aux synagogues de créer des espaces d'hommage personnalisés, de partager des souvenirs et d'organiser des commémorations.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          Comment créer un espace de mémoire pour ma famille ?
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          Inscrivez-vous sur notre plateforme en sélectionnant le type d'utilisateur "Famille". Une fois connecté, vous pourrez créer un profil personnalisé pour votre famille, ajouter des informations sur vos proches disparus, et partager des photos, vidéos et histoires.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          Puis-je utiliser le site pour ma synagogue ?
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          Oui ! Le Mur du Souvenir offre des fonctionnalités spécifiques pour les synagogues, comme la gestion des profils communautaires, l'organisation des commémorations, et la communication avec les familles. Inscrivez-vous en tant que "Synagogue" pour commencer.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          Le site est-il sécurisé pour partager des informations personnelles ?
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          Absolument. Nous utilisons des protocoles de sécurité avancés pour protéger vos données personnelles et les informations partagées sur la plateforme. Vos données sont confidentielles et accessibles uniquement aux utilisateurs autorisés.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          Comment puis-je contacter l'équipe du Mur du Souvenir ?
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          Vous pouvez nous contacter par e-mail à <a href="mailto:contact@murdusouvenir.fr">contact@murdusouvenir.fr</a> ou via notre page <a href="{% url 'siteweb:contact' %}">Contact</a>. Nous sommes là pour répondre à toutes vos questions !
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+{% block extra_js %}
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const faqQuestions = document.querySelectorAll('.faq-question');
+      
+      faqQuestions.forEach(question => {
+        question.addEventListener('click', () => {
+          const faqItem = question.parentElement;
+          const isActive = faqItem.classList.contains('active');
+          const answer = faqItem.querySelector('.faq-answer');
+          
+          // Fermer toutes les autres FAQ
+          document.querySelectorAll('.faq-item').forEach(item => {
+            if (item !== faqItem) {
+              item.classList.remove('active');
+              item.querySelector('.faq-answer').style.maxHeight = '0';
+            }
+          });
+          
+          // Ouvrir/fermer la FAQ cliquée
+          if (isActive) {
+            faqItem.classList.remove('active');
+            answer.style.maxHeight = '0';
+          } else {
+            faqItem.classList.add('active');
+            // Ajouter un léger délai pour s'assurer que le rendu est complet
+            setTimeout(() => {
+              const scrollHeight = answer.scrollHeight;
+              console.log('scrollHeight:', scrollHeight); // Pour débogage
+              answer.style.maxHeight = (scrollHeight + 30) + 'px'; // Ajouter 30px pour les paddings
+            }, 0);
+          }
+        });
+      });
+    });
+  </script>
+{% endblock %}
